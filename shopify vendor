@@ -1,0 +1,44 @@
+https://www.shopify.in/partners/shopify-cheat-sheet
+https://stackoverflow.com/questions/62400611/how-to-separately-display-products-by-vendor-in-shopify-liquid
+{% paginate collection.products by 50 %}
+    {% for product in collection.products %}
+        {% assign vendor = product.vendor | downcase | replace: ' ', '_' %}
+        {% if vendor == 'green' %}
+            <h2>Green</h2>
+            {% include 'product-card' %}
+        {% elsif vendor == 'red' %}
+            <h2>Red</h2>
+            {% include 'product-card' %}
+        {% elsif vendor == 'yellow' %}
+            <h2>Yellow</h2>
+            {% include 'product-card' %}
+        {% endif %}
+    {% endfor %}
+{% endpaginate %}
+
+
+=====================================get all vendor ===================================
+
+{% assign vendor = product.vendor %}
+{% assign vendor_handle = vendor | handleize %}
+{% assign handle = product.handle %}
+{% assign counter = '' %}
+{% for product in collections[vendor_handle].all_products %}
+  {% if vendor == product.vendor and counter.size < 4 and handle != product.handle %}
+  {% capture temp %}{{ counter }}*{% endcapture %}
+  {% assign counter = temp %}
+  <div>
+    <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+      <img src="{{ product.images.first | product_img_url: 'small' }}" alt="{{ product.title }}" />
+    </a>    
+  </div>
+  {% endif %} 
+{% endfor %}
+
+
+https://community.shopify.com/c/Shopify-Design/Display-Related-Products-by-Vendor-a-k-a-quot-More-works-by-this/td-p/98306
+
+
+https://webkul.com/blog/showing-more-product-from-same-vendor-shopify/   =====> check this
+
+{{ product.vendor | link_to_vendor }}  => use this for display vendor 
