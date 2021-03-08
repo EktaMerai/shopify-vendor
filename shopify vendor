@@ -42,3 +42,12 @@ https://community.shopify.com/c/Shopify-Design/Display-Related-Products-by-Vendo
 https://webkul.com/blog/showing-more-product-from-same-vendor-shopify/   =====> check this
 
 {{ product.vendor | link_to_vendor }}  => use this for display vendor 
+
+
+================================== use this for vendor wise link ========================
+
+<ul>
+  {%- for product_vendor in shop.vendors -%}
+    <li>{{ product_vendor | link_to_vendor }}</li>
+  {%- endfor -%}
+</ul>
